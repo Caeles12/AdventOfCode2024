@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
     safe_with_errors_total += isSafeTolerant(report);
   }
 
-  cout << safe_total << endl;
-  cout << safe_with_errors_total << endl;
+  cout << "Part 1 result: " << safe_total << endl;
+  cout << "Part 2 result: " << safe_with_errors_total << endl;
 
   file.close();
   return 0;
