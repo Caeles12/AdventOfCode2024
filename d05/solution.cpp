@@ -57,9 +57,6 @@ int solve(std::ifstream &file)
   std::string line;
   while (std::getline(file, line) && line.length() > 0) {
     std::vector<number> values = split(line, '|');
-    if(rules.count(values[0]) == 0) {
-      rules[values[0]] = {};
-    }
     rules[values[0]].insert(values[1]);
   }
 
