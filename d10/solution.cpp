@@ -4,7 +4,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <map>
 
 struct Map {
   int width;
