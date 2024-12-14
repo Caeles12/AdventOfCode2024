@@ -22,10 +22,10 @@ typedef struct {
   Vector2D v;
 } Robot;
 
-typedef struct {
+typedef struct Area {
   int width = 0;
   int height = 0;
-} Map;
+} Area;
 
 
 std::vector<int> extractNumbers(std::string text)
@@ -44,7 +44,7 @@ std::vector<int> extractNumbers(std::string text)
 }
 
 
-void moveRobot(Robot &r, Map m)
+void moveRobot(Robot &r, Area m)
 {
   r.p.x = (r.p.x + r.v.x) % m.width;
   r.p.y = (r.p.y + r.v.y) % m.height;
@@ -52,7 +52,7 @@ void moveRobot(Robot &r, Map m)
   if(r.p.y < 0)  r.p.y += m.height;
 }
 
-bool noRobotOverlap(std::vector<Robot> robots, Map m)
+bool noRobotOverlap(std::vector<Robot> robots, Area m)
 {
   int map[m.height][m.width];
   memset( map, 0, m.height*m.width*sizeof(int) );
@@ -66,7 +66,7 @@ bool noRobotOverlap(std::vector<Robot> robots, Map m)
   return true;
 }
 
-void printMap(std::vector<Robot> robots, Map m)
+void printArea(std::vector<Robot> robots, Area m)
 {
   int map[m.height][m.width];
   memset( map, 0, m.height*m.width*sizeof(int) );
@@ -85,7 +85,7 @@ void printMap(std::vector<Robot> robots, Map m)
     std::cout << std::endl;
   }
 }
-Quadrants countQuadrants(std::vector<Robot> robots, Map m)
+Quadrants countQuadrants(std::vector<Robot> robots, Area m)
 {
   Quadrants q = {0, 0, 0, 0};
 
@@ -111,7 +111,7 @@ Quadrants countQuadrants(std::vector<Robot> robots, Map m)
   return q;
 }
 
-int solve(std::ifstream &file, Map m)
+int solve(std::ifstream &file, Area m)
 {
   std::vector<Robot> robots;
   std::string line;
@@ -123,7 +123,7 @@ int solve(std::ifstream &file, Map m)
     };
     robots.push_back(r);
   }
-  //printMap(robots, m);
+  //printArea(robots, m);
   Quadrants q;
   std::cout << std::endl;
   int i = 0;
@@ -138,7 +138,7 @@ int solve(std::ifstream &file, Map m)
       std::cout << "After 100 seconds, the safety factor is: " << q.NW * q.NE * q.SW * q.SE << std::endl;
     }
     if(noRobotOverlap(robots, m)) {
-      printMap(robots, m);
+      printArea(robots, m);
       std::cout << "Found the easter egg after " << i << " seconds." << std::endl;
       foundEasterEgg = true;
     };
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  Map m{
+  Area m{
     std::stoi(argv[2]),
     std::stoi(argv[3])
   };
